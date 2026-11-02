@@ -1,0 +1,11 @@
+# Personal documents and data files stay local
+*.pdf
+*.csv
+*.csv.gz
+*.parquet
+
+# Databricks / Python local files
+.databricks/
+__pycache__/
+.ipynb_checkpoints/
+.venv/
