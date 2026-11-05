@@ -61,13 +61,13 @@ Priority: **M** = must, **S** = should, **C** = could. Points use a 1/2/3/5/8 sc
 |---|---|---|---|---|
 | 1.1 | As an analyst, I want GHCN-Daily in Delta so I can query weather at scale | `ghcn_daily` and `ghcn_stations` exist; counts re-verified | M | 3 ✅ |
 | 1.2 | As an analyst, I want county yields and county centroids in Delta | `nass_county_yields`, `us_counties` exist; ≥95% of yield counties match a centroid | M | 3 ✅ |
-| 1.3 | As an actuary, I want 20+ years of weather so loss events are not too rare | GHCN extended back to at least 2000; per-year counts reported | M | 3 |
-| 1.4 | As a reviewer, I want a data-quality report | Null rates, QC-flag share, station coverage by state, yield suppression `(D)` share | S | 2 |
+| 1.3 | As an actuary, I want 20+ years of weather so loss events are not too rare | GHCN extended back to at least 2000; per-year counts reported | M | 3 ✅ |
+| 1.4 | As a reviewer, I want a data-quality report | Null rates, QC-flag share, station coverage by state, yield suppression `(D)` share | S | 2 ✅ |
 
 ### E2. Spatial linking
 | ID | Story | Acceptance criteria | Pri | Pts |
 |---|---|---|---|---|
-| 2.1 | As an analyst, I want each county linked to its nearest stations | Table of county → k nearest stations with haversine distance (km) | M | 5 |
+| 2.1 | As an analyst, I want each county linked to its nearest stations | Table of county → k nearest stations with haversine distance (km) | M | 5 ✅ |
 | 2.2 | As an analyst, I want only stations with usable data | Station kept only if ≥90% of growing-season days have `PRCP` and `TMAX` | M | 3 |
 | 2.3 | As a risk manager, I want to know which counties lack a nearby station | Map/list of counties with no qualifying station within 30 km | S | 2 |
 
@@ -110,7 +110,7 @@ Priority: **M** = must, **S** = should, **C** = could. Points use a 1/2/3/5/8 sc
 | Sprint | Goal | Stories |
 |---|---|---|
 | 0 | Data in place | 1.1 ✅, 1.2 ✅ |
-| 1 | Enough history, trustworthy data | 1.3, 1.4, 2.1 |
+| 1 | Enough history, trustworthy data | 1.3 ✅, 1.4 ✅, 2.1 ✅ |
 | 2 | Weather features per county | 2.2, 2.3, 3.1, 3.2 |
 | 3 | Losses defined | 3.3, 4.1, 4.2 |
 | 4 | Triggers and basis risk | 5.1, 5.2, 5.3 |

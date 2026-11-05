@@ -36,6 +36,9 @@ Project plan: [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md)
 | `databricks/00_connectivity_check.py` | Confirms the workspace can reach the public endpoints |
 | `databricks/01_ingest_noaa_ghcn.py` | Downloads 2019–2025 into a Unity Catalog Volume and writes the Delta tables |
 | `databricks/02_ingest_nass_yields.py` | Downloads NASS crops and county centroids into the `agri_yield` Volume and writes the Delta tables |
+| `databricks/03_extend_ghcn_history.py` | Sprint 1 (1.3): appends US PRCP/TMAX/TMIN for 2000–2018 to `ghcn_daily` |
+| `databricks/04_data_quality_report.py` | Sprint 1 (1.4): writes `dq_report` (null rates, QC share, station coverage, yield suppression) |
+| `databricks/05_county_nearest_stations.py` | Sprint 1 (2.1): writes `county_station_links` (10 nearest stations per county, haversine km) |
 
 The notebooks use Databricks source format. To run one from this machine with the Databricks CLI:
 
