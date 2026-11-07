@@ -39,6 +39,11 @@ Project plan: [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md)
 | `databricks/03_extend_ghcn_history.py` | Sprint 1 (1.3): appends US PRCP/TMAX/TMIN for 2000–2018 to `ghcn_daily` |
 | `databricks/04_data_quality_report.py` | Sprint 1 (1.4): writes `dq_report` (null rates, QC share, station coverage, yield suppression) |
 | `databricks/05_county_nearest_stations.py` | Sprint 1 (2.1): writes `county_station_links` (10 nearest stations per county, haversine km) |
+| `databricks/06_usable_stations.py` | Sprint 2 (2.2): writes `station_year_quality` (station-years with >=90% growing-season PRCP and TMAX) |
+| `databricks/07_county_coverage.py` | Sprint 2 (2.3): writes `county_year_station` and `county_coverage_gaps` |
+| `databricks/08_weather_features.py` | Sprint 2 (3.1, 3.2): writes Gold table `county_year_weather_features` (season rainfall, driest 30 days, heat-stress days) |
+
+Checkpoint 3 write-up (Agile approach): [docs/Checkpoint3_Agile_Writeup.docx](docs/Checkpoint3_Agile_Writeup.docx)
 
 The notebooks use Databricks source format. To run one from this machine with the Databricks CLI:
 
