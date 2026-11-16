@@ -44,6 +44,7 @@ Project plan: [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md)
 | `databricks/08_weather_features.py` | Sprint 2 (3.1, 3.2): writes Gold table `county_year_weather_features` (season rainfall, driest 30 days, heat-stress days) |
 | `databricks/09_dry_spell.py` | Sprint 3 (3.3): writes `county_year_dry_spell` (longest run of days with PRCP < 1 mm, April-September) |
 | `databricks/10_yield_trend_losses.py` | Sprint 3 (4.1, 4.2): writes `county_yield_trend` (per-county linear trend, % of trend, loss flag below 85%) |
+| `databricks/11_trigger_basis_risk.py` | Sprint 4 (5.1-5.3): writes `trigger_eval_county`, `trigger_eval_dist_band` and `best_trigger_region` (hit/miss/false alarm, basis risk = miss rate, best trigger per state and crop) |
 
 Checkpoint 3 write-up (Agile approach): [docs/Checkpoint3_Agile_Writeup.docx](docs/Checkpoint3_Agile_Writeup.docx)
 
