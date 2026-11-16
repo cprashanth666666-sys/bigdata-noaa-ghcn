@@ -7,6 +7,7 @@
 #   trigger_eval_county      one row per county, crop, index, pay_freq: hit / miss / false alarm counts and rates (5.1, 5.2)
 #   trigger_eval_dist_band   same, pooled by crop, index, pay_freq and station-distance band (5.2)
 #   best_trigger_region      one row per state and crop: the chosen trigger (5.3)
+#   trigger_county_year      row level: county, crop, year, index, pay_freq, threshold, trig, is_loss (used by 13)
 #
 # Definitions
 #   Trigger   pays in a year when the weather index is among the worst PAY_FREQ share of that county's years.
@@ -78,6 +79,12 @@ rows = (long_idx.join(thr, ["county_fips", "index_name"])
         .withColumn("false_alarm", (F.col("trig") & (~F.col("is_loss"))).cast("int"))
         .withColumn("loss", F.col("is_loss").cast("int"))
         .withColumn("trig_i", F.col("trig").cast("int")))
+
+# Row-level result, one row per county, crop, year, index, pay_freq. Notebook 13 prices from it.
+(rows.select("county_fips", "crop", "year", "index_name", "pay_freq", "distance_km",
+             "stress", "threshold", "trig", "is_loss")
+     .write.format("delta").mode("overwrite").option("overwriteSchema", "true")
+     .saveAsTable(f"{S}.trigger_county_year"))
 
 def rates(df):
     return (df.withColumn("trigger_rate", F.round(F.col("n_trig") / F.col("n_years"), 4))

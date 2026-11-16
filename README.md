@@ -45,6 +45,8 @@ Project plan: [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md)
 | `databricks/09_dry_spell.py` | Sprint 3 (3.3): writes `county_year_dry_spell` (longest run of days with PRCP < 1 mm, April-September) |
 | `databricks/10_yield_trend_losses.py` | Sprint 3 (4.1, 4.2): writes `county_yield_trend` (per-county linear trend, % of trend, loss flag below 85%) |
 | `databricks/11_trigger_basis_risk.py` | Sprint 4 (5.1-5.3): writes `trigger_eval_county`, `trigger_eval_dist_band` and `best_trigger_region` (hit/miss/false alarm, basis risk = miss rate, best trigger per state and crop) |
+| `databricks/12_station_correlation_distance.py` | Sprint 5 (5.4): writes `station_pair_corr` and `corr_distance_curve` (how weather similarity between stations falls with distance) |
+| `databricks/13_pricing_portfolio.py` | Sprint 5 (6.1, 6.2): writes `premium_county`, `portfolio_year`, `portfolio_summary` (burn-cost premium, worst-year payout) |
 
 Checkpoint 3 write-up (Agile approach): [docs/Checkpoint3_Agile_Writeup.docx](docs/Checkpoint3_Agile_Writeup.docx)
 
