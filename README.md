@@ -47,6 +47,7 @@ Project plan: [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md)
 | `databricks/11_trigger_basis_risk.py` | Sprint 4 (5.1-5.3): writes `trigger_eval_county`, `trigger_eval_dist_band` and `best_trigger_region` (hit/miss/false alarm, basis risk = miss rate, best trigger per state and crop) |
 | `databricks/12_station_correlation_distance.py` | Sprint 5 (5.4): writes `station_pair_corr` and `corr_distance_curve` (how weather similarity between stations falls with distance) |
 | `databricks/13_pricing_portfolio.py` | Sprint 5 (6.1, 6.2): writes `premium_county`, `portfolio_year`, `portfolio_summary` (burn-cost premium, worst-year payout) |
+| `databricks/14_dashboard_views.py` | Story 7.1: creates the `v_*` views the Databricks SQL dashboard reads; layout in [docs/DASHBOARD.md](docs/DASHBOARD.md) |
 
 Checkpoint 3 write-up (Agile approach): [docs/Checkpoint3_Agile_Writeup.docx](docs/Checkpoint3_Agile_Writeup.docx)
 

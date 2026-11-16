@@ -101,7 +101,7 @@ Priority: **M** = must, **S** = should, **C** = could. Points use a 1/2/3/5/8 sc
 ### E7. Delivery
 | ID | Story | Acceptance criteria | Pri | Pts |
 |---|---|---|---|---|
-| 7.1 | As a stakeholder, I want a dashboard | Databricks SQL dashboard: map of basis risk, premium per county, trigger performance | M | 5 |
+| 7.1 | As a stakeholder, I want a dashboard | Databricks SQL dashboard: map of basis risk, premium per county, trigger performance | M | 5 🔧 |
 | 7.2 | As an examiner, I want a report and viva deck | Problem, data, method, results, limitations, business recommendation | M | 5 |
 | 7.3 | As an examiner, I want evidence of big-data engineering | Benchmark of one heavy job with and without partitioning/broadcast join | C | 3 |
 
@@ -116,7 +116,7 @@ Legend: ✅ built and run-verified on Databricks (Definition of Done met). 🔧 
 | 2 | Weather features per county | 2.2 🔧, 2.3 🔧, 3.1 🔧, 3.2 🔧 |
 | 3 | Losses defined | 3.3 🔧, 4.1 🔧, 4.2 🔧 |
 | 4 | Triggers and basis risk | 5.1 🔧, 5.2 🔧, 5.3 🔧 |
-| 5 | Pricing and dashboard | 5.4 🔧, 6.1 🔧, 6.2 🔧, 7.1 |
+| 5 | Pricing and dashboard | 5.4 🔧, 6.1 🔧, 6.2 🔧, 7.1 🔧 |
 | 6 | Hardening and submission | 7.2, 7.3, buffer for spill-over |
 
 Each sprint ends with a working, demonstrable increment, not just code.
