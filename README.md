@@ -27,7 +27,8 @@ Units in `ghcn_daily.value` depend on `element`: `TMAX`/`TMIN`/`TAVG` are tenths
 | `workspace.default.nass_county_yields` | Annual county survey yields, numeric only | 2,219,339 |
 | `workspace.default.us_counties` | County FIPS, name, centroid latitude/longitude | 3,222 |
 
-Project plan: [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md)
+Project plan: [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md)  
+Team, task ownership and progress: [docs/TEAM_PROGRESS.md](docs/TEAM_PROGRESS.md) | [Project board](https://github.com/users/cprashanth666666-sys/projects/1)
 
 ## Notebooks
 
