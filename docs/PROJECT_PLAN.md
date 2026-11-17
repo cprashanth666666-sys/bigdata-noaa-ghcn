@@ -68,35 +68,35 @@ Priority: **M** = must, **S** = should, **C** = could. Points use a 1/2/3/5/8 sc
 | ID | Story | Acceptance criteria | Pri | Pts |
 |---|---|---|---|---|
 | 2.1 | As an analyst, I want each county linked to its nearest stations | Table of county → k nearest stations with haversine distance (km) | M | 5 ✅ |
-| 2.2 | As an analyst, I want only stations with usable data | Station kept only if ≥90% of growing-season days have `PRCP` and `TMAX` | M | 3 🔧 |
-| 2.3 | As a risk manager, I want to know which counties lack a nearby station | Map/list of counties with no qualifying station within 30 km | S | 2 🔧 |
+| 2.2 | As an analyst, I want only stations with usable data | Station kept only if ≥90% of growing-season days have `PRCP` and `TMAX` | M | 3 ✅ |
+| 2.3 | As a risk manager, I want to know which counties lack a nearby station | Map/list of counties with no qualifying station within 30 km | S | 2 ✅ |
 
 ### E3. Weather index features (Gold)
 | ID | Story | Acceptance criteria | Pri | Pts |
 |---|---|---|---|---|
-| 3.1 | As an actuary, I want growing-season rainfall per county-year | April–September total `PRCP` (mm), plus 30-day rolling minimum | M | 5 🔧 |
-| 3.2 | As an actuary, I want heat-stress counts per county-year | Days with `TMAX` > 30 °C and > 35 °C in July–August | M | 3 🔧 |
-| 3.3 | As an actuary, I want dry-spell length | Longest run of days with `PRCP` < 1 mm in the growing season | S | 5 🔧 |
+| 3.1 | As an actuary, I want growing-season rainfall per county-year | April–September total `PRCP` (mm), plus 30-day rolling minimum | M | 5 ✅ |
+| 3.2 | As an actuary, I want heat-stress counts per county-year | Days with `TMAX` > 30 °C and > 35 °C in July–August | M | 3 ✅ |
+| 3.3 | As an actuary, I want dry-spell length | Longest run of days with `PRCP` < 1 mm in the growing season | S | 5 ✅ |
 
 ### E4. Loss definition
 | ID | Story | Acceptance criteria | Pri | Pts |
 |---|---|---|---|---|
-| 4.1 | As an actuary, I want yields detrended per county | Linear trend per county and crop; residual and % deviation stored | M | 5 🔧 |
-| 4.2 | As an insurer, I want a clear loss event | Loss = yield below 85% of trend (threshold configurable); share of loss years reported | M | 2 🔧 |
+| 4.1 | As an actuary, I want yields detrended per county | Linear trend per county and crop; residual and % deviation stored | M | 5 ✅ |
+| 4.2 | As an insurer, I want a clear loss event | Loss = yield below 85% of trend (threshold configurable); share of loss years reported | M | 2 ✅ |
 
 ### E5. Trigger design and basis risk
 | ID | Story | Acceptance criteria | Pri | Pts |
 |---|---|---|---|---|
-| 5.1 | As an insurer, I want candidate triggers evaluated against losses | Confusion matrix per trigger: hit, miss (loss, no payout), false alarm | M | 5 🔧 |
-| 5.2 | As an insurer, I want basis risk quantified | Basis risk = miss rate; reported by county and by station distance band | M | 5 🔧 |
-| 5.3 | As a product designer, I want the best trigger per region | Trigger chosen by lowest miss rate subject to a false-alarm cap; documented | M | 3 🔧 |
-| 5.4 | As a risk manager, I want to see how distance drives basis risk | Station-pair correlation vs distance curve | S | 5 🔧 |
+| 5.1 | As an insurer, I want candidate triggers evaluated against losses | Confusion matrix per trigger: hit, miss (loss, no payout), false alarm | M | 5 ✅ |
+| 5.2 | As an insurer, I want basis risk quantified | Basis risk = miss rate; reported by county and by station distance band | M | 5 ✅ |
+| 5.3 | As a product designer, I want the best trigger per region | Trigger chosen by lowest miss rate subject to a false-alarm cap; documented | M | 3 ✅ |
+| 5.4 | As a risk manager, I want to see how distance drives basis risk | Station-pair correlation vs distance curve | S | 5 ✅ |
 
 ### E6. Pricing
 | ID | Story | Acceptance criteria | Pri | Pts |
 |---|---|---|---|---|
-| 6.1 | As an actuary, I want a burn-cost premium | Historic payout frequency × payout per county; loading factor stated | M | 3 🔧 |
-| 6.2 | As an insurer, I want a portfolio view | Expected loss and worst-year payout across all counties | S | 3 🔧 |
+| 6.1 | As an actuary, I want a burn-cost premium | Historic payout frequency × payout per county; loading factor stated | M | 3 ✅ |
+| 6.2 | As an insurer, I want a portfolio view | Expected loss and worst-year payout across all counties | S | 3 ✅ |
 
 ### E7. Delivery
 | ID | Story | Acceptance criteria | Pri | Pts |
@@ -107,16 +107,18 @@ Priority: **M** = must, **S** = should, **C** = could. Points use a 1/2/3/5/8 sc
 
 ## 6. Sprint plan
 
-Legend: ✅ built and run-verified on Databricks (Definition of Done met). 🔧 notebook written and committed, not yet run; run output still to be attached.
+Legend: ✅ built and run-verified on Databricks (Definition of Done met). 🔧 built, not yet complete.
+
+Verification, 16 Nov 2026: notebooks 06-15 ran as Databricks jobs (runs 39815730124059 and 995256526456964, serverless). `15_validate_pipeline` passed 46 of 46 checks across modules 01-14; results are stored in `pipeline_validation`. Story 7.1 stays 🔧: the dashboard views exist and pass, but the dashboard itself is still to be assembled in the Databricks UI (docs/DASHBOARD.md).
 
 | Sprint | Goal | Stories |
 |---|---|---|
 | 0 | Data in place | 1.1 ✅, 1.2 ✅ |
 | 1 | Enough history, trustworthy data | 1.3 ✅, 1.4 ✅, 2.1 ✅ |
-| 2 | Weather features per county | 2.2 🔧, 2.3 🔧, 3.1 🔧, 3.2 🔧 |
-| 3 | Losses defined | 3.3 🔧, 4.1 🔧, 4.2 🔧 |
-| 4 | Triggers and basis risk | 5.1 🔧, 5.2 🔧, 5.3 🔧 |
-| 5 | Pricing and dashboard | 5.4 🔧, 6.1 🔧, 6.2 🔧, 7.1 🔧 |
+| 2 | Weather features per county | 2.2 ✅, 2.3 ✅, 3.1 ✅, 3.2 ✅ |
+| 3 | Losses defined | 3.3 ✅, 4.1 ✅, 4.2 ✅ |
+| 4 | Triggers and basis risk | 5.1 ✅, 5.2 ✅, 5.3 ✅ |
+| 5 | Pricing and dashboard | 5.4 ✅, 6.1 ✅, 6.2 ✅, 7.1 🔧 |
 | 6 | Hardening and submission | 7.2, 7.3, buffer for spill-over |
 
 Each sprint ends with a working, demonstrable increment, not just code.

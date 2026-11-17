@@ -9,7 +9,7 @@
 # Assumptions:
 #   - "Usable" comes from station_year_quality (>=90% growing-season PRCP and TMAX).
 #   - Covered = nearest usable station is within COVER_KM = 30 km in that year.
-#   - Scope = counties that have yield data. Corn Belt = state FIPS IA 19, IL 17, IN 18, NE 31, MN 27.
+#   - Scope = counties with yield data in 2000-2025 that have a current Census code. Corn Belt = state FIPS IA 19, IL 17, IN 18, NE 31, MN 27.
 #   - Links hold only the 10 nearest stations, so a county whose 10 nearest are all unusable counts as uncovered.
 
 # COMMAND ----------
@@ -35,7 +35,12 @@ nearest = (cy.withColumn("r", F.row_number().over(w)).where("r = 1")
 
 # COMMAND ----------
 
-scope = (spark.table(f"{S}.nass_county_yields").select("county_fips").distinct()
+# Scope = counties with a yield in the study years AND a current Census code. Without both filters, 8 defunct
+# counties (e.g. Ormsby NV, Washabaugh SD, Connecticut's abolished counties; yields end by 1987) were listed
+# as "never covered", which is an artefact of old codes, not a real coverage gap.
+scope = (spark.table(f"{S}.nass_county_yields").where(F.col("year").between(min(YEARS), max(YEARS)))
+         .select("county_fips").distinct()
+         .join(spark.table(f"{S}.us_counties").select("county_fips"), "county_fips")
          .crossJoin(years))
 cov = (scope.join(spark.table(f"{S}.county_year_station"), ["county_fips", "year"], "left")
        .withColumn("covered", (F.col("distance_km") <= COVER_KM).cast("int")))

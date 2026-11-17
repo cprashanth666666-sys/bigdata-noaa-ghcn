@@ -92,8 +92,13 @@ def rates(df):
               .withColumn("false_alarm_rate", F.round(F.col("false_alarm") / (F.col("n_years") - F.col("n_loss")), 4)))
 
 def counts():
+    """Confusion counts from row-level data (one row per county-year)."""
     return [F.count("*").alias("n_years"), F.sum("loss").alias("n_loss"), F.sum("trig_i").alias("n_trig"),
             F.sum("hit").alias("hit"), F.sum("miss").alias("miss"), F.sum("false_alarm").alias("false_alarm")]
+
+def pooled_counts():
+    """The same counts re-added from an already-aggregated table such as trigger_eval_county."""
+    return [F.sum(c).alias(c) for c in ("n_years", "n_loss", "n_trig", "hit", "miss", "false_alarm")]
 
 # COMMAND ----------
 
@@ -142,7 +147,7 @@ assert ce.where("hit + false_alarm <> n_trig").count() == 0, "hit + false alarm 
 assert ce.groupBy("county_fips", "crop", "index_name", "pay_freq").count().where("count > 1").count() == 0, "duplicates"
 
 print("Basis risk (pooled miss rate) by index and pay frequency, all regions:")
-(rates(ce.groupBy("crop", "index_name", "pay_freq").agg(*counts())).orderBy("crop", "index_name", "pay_freq")
+(rates(ce.groupBy("crop", "index_name", "pay_freq").agg(*pooled_counts())).orderBy("crop", "index_name", "pay_freq")
    .select("crop", "index_name", "pay_freq", "n_loss", "trigger_rate", "miss_rate", "false_alarm_rate").show(60))
 print("Basis risk by distance band:")
 spark.table(f"{S}.trigger_eval_dist_band").where("pay_freq = 0.20").orderBy("crop", "index_name", "dist_band") \

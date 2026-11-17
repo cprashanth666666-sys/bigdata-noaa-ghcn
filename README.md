@@ -48,6 +48,7 @@ Project plan: [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md)
 | `databricks/12_station_correlation_distance.py` | Sprint 5 (5.4): writes `station_pair_corr` and `corr_distance_curve` (how weather similarity between stations falls with distance) |
 | `databricks/13_pricing_portfolio.py` | Sprint 5 (6.1, 6.2): writes `premium_county`, `portfolio_year`, `portfolio_summary` (burn-cost premium, worst-year payout) |
 | `databricks/14_dashboard_views.py` | Story 7.1: creates the `v_*` views the Databricks SQL dashboard reads; layout in [docs/DASHBOARD.md](docs/DASHBOARD.md) |
+| `databricks/15_validate_pipeline.py` | Runs last: checks every module's table (row counts and content rules) and writes `pipeline_validation`; 46 of 46 checks passed on 16 Nov 2026 |
 
 Checkpoint 3 write-up (Agile approach): [docs/Checkpoint3_Agile_Writeup.docx](docs/Checkpoint3_Agile_Writeup.docx)
 
