@@ -6,7 +6,13 @@
 
 **Data:** the views created by `databricks/14_dashboard_views.py`. Run notebooks 06 to 14 in order first. Notebook 14 fails with a clear message if a view is empty.
 
-## How to build it
+## Status
+
+Published 24 Nov 2026: https://dbc-d4bd1829-d2ae.cloud.databricks.com/dashboardsv3/01f1e7efb8d312aa9a04c3e417b618b0/published
+
+The dashboard is generated from code: `python databricks/dashboard/build_dashboard.py --deploy` writes `databricks/dashboard/parametric_insurance.lvdash.json`, then creates or updates the dashboard in the workspace and publishes it on the SQL warehouse. Edit the script, not the UI, so the repository stays the source of truth. Differences from the plan below: each page has its own crop filter (default corn) instead of global filters, the coverage map is limited to the five Corn Belt states, and the premium histogram is a bar chart of counties per 1-point premium band.
+
+## How to build it by hand (original plan)
 
 1. In Databricks, open **Dashboards → Create dashboard** (the AI/BI dashboard editor).
 2. On the **Data** tab, add one dataset per view below. Each dataset uses a query of the form `SELECT * FROM workspace.default.<view>`.

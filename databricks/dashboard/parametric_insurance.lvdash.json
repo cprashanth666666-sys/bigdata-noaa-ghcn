@@ -1,0 +1,1672 @@
+{
+  "datasets": [
+    {
+      "name": "basis_risk_map",
+      "displayName": "basis_risk_map",
+      "queryLines": [
+        "SELECT * FROM workspace.default.v_county_basis_risk ORDER BY miss_rate DESC, false_alarm_rate DESC"
+      ]
+    },
+    {
+      "name": "premium",
+      "displayName": "premium",
+      "queryLines": [
+        "SELECT * FROM workspace.default.v_county_premium ORDER BY premium_per_acre_usd DESC"
+      ]
+    },
+    {
+      "name": "trigger_perf",
+      "displayName": "trigger_perf",
+      "queryLines": [
+        "SELECT * FROM workspace.default.v_trigger_performance"
+      ]
+    },
+    {
+      "name": "distance_bands",
+      "displayName": "distance_bands",
+      "queryLines": [
+        "SELECT * FROM workspace.default.v_basis_risk_by_distance"
+      ]
+    },
+    {
+      "name": "corr_curve",
+      "displayName": "corr_curve",
+      "queryLines": [
+        "SELECT * FROM workspace.default.v_corr_distance"
+      ]
+    },
+    {
+      "name": "portfolio_year",
+      "displayName": "portfolio_year",
+      "queryLines": [
+        "SELECT * FROM workspace.default.v_portfolio_year"
+      ]
+    },
+    {
+      "name": "portfolio_summary",
+      "displayName": "portfolio_summary",
+      "queryLines": [
+        "SELECT * FROM workspace.default.v_portfolio_summary"
+      ]
+    },
+    {
+      "name": "coverage",
+      "displayName": "coverage",
+      "queryLines": [
+        "SELECT * FROM workspace.default.v_coverage_gaps WHERE state_alpha IN ('IA', 'IL', 'IN', 'NE', 'MN')"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "p_fail",
+      "displayName": "1. Where it fails",
+      "layout": [
+        {
+          "widget": {
+            "name": "text_1",
+            "multilineTextboxSpec": {
+              "lines": [
+                "## Where does the trigger fail farmers?\n\n",
+                "Each point is a Corn Belt county under its state's chosen trigger. Darker = higher miss rate (share of loss years with no payout = basis risk).\n\n",
+                "**Read with care:** thresholds are set from the same years they are tested on, so miss rates are optimistic. Each county counts as one insured acre; dollar figures show the shape of the risk, not real exposure. Crop prices and the 25% payout share are illustrative (notebook 13).\n\n"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 4,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "filter_2",
+            "queries": [
+              {
+                "name": "f_crop_basis_risk_map",
+                "query": {
+                  "datasetName": "basis_risk_map",
+                  "fields": [
+                    {
+                      "name": "crop",
+                      "expression": "`crop`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "f_crop_premium",
+                "query": {
+                  "datasetName": "premium",
+                  "fields": [
+                    {
+                      "name": "crop",
+                      "expression": "`crop`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "f_crop_trigger_perf",
+                "query": {
+                  "datasetName": "trigger_perf",
+                  "fields": [
+                    {
+                      "name": "crop",
+                      "expression": "`crop`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "f_crop_distance_bands",
+                "query": {
+                  "datasetName": "distance_bands",
+                  "fields": [
+                    {
+                      "name": "crop",
+                      "expression": "`crop`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "crop",
+                    "displayName": "crop",
+                    "queryName": "f_crop_basis_risk_map"
+                  },
+                  {
+                    "fieldName": "crop",
+                    "displayName": "crop",
+                    "queryName": "f_crop_premium"
+                  },
+                  {
+                    "fieldName": "crop",
+                    "displayName": "crop",
+                    "queryName": "f_crop_trigger_perf"
+                  },
+                  {
+                    "fieldName": "crop",
+                    "displayName": "crop",
+                    "queryName": "f_crop_distance_bands"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Crop"
+              },
+              "selection": {
+                "defaultSelection": {
+                  "values": {
+                    "dataType": "STRING",
+                    "values": [
+                      {
+                        "value": "corn"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 0,
+            "width": 1,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "filter_3",
+            "queries": [
+              {
+                "name": "f_state_alpha_basis_risk_map",
+                "query": {
+                  "datasetName": "basis_risk_map",
+                  "fields": [
+                    {
+                      "name": "state_alpha",
+                      "expression": "`state_alpha`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "f_state_alpha_premium",
+                "query": {
+                  "datasetName": "premium",
+                  "fields": [
+                    {
+                      "name": "state_alpha",
+                      "expression": "`state_alpha`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "f_state_alpha_coverage",
+                "query": {
+                  "datasetName": "coverage",
+                  "fields": [
+                    {
+                      "name": "state_alpha",
+                      "expression": "`state_alpha`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "filter-multi-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "state_alpha",
+                    "displayName": "state_alpha",
+                    "queryName": "f_state_alpha_basis_risk_map"
+                  },
+                  {
+                    "fieldName": "state_alpha",
+                    "displayName": "state_alpha",
+                    "queryName": "f_state_alpha_premium"
+                  },
+                  {
+                    "fieldName": "state_alpha",
+                    "displayName": "state_alpha",
+                    "queryName": "f_state_alpha_coverage"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "State"
+              }
+            }
+          },
+          "position": {
+            "x": 5,
+            "y": 0,
+            "width": 1,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "symbol-map_4",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "basis_risk_map",
+                  "fields": [
+                    {
+                      "name": "latitude",
+                      "expression": "`latitude`"
+                    },
+                    {
+                      "name": "longitude",
+                      "expression": "`longitude`"
+                    },
+                    {
+                      "name": "miss_rate",
+                      "expression": "`miss_rate`"
+                    },
+                    {
+                      "name": "county_name",
+                      "expression": "`county_name`"
+                    },
+                    {
+                      "name": "state_alpha",
+                      "expression": "`state_alpha`"
+                    },
+                    {
+                      "name": "index_name",
+                      "expression": "`index_name`"
+                    },
+                    {
+                      "name": "n_loss",
+                      "expression": "`n_loss`"
+                    },
+                    {
+                      "name": "false_alarm_rate",
+                      "expression": "`false_alarm_rate`"
+                    },
+                    {
+                      "name": "avg_distance_km",
+                      "expression": "`avg_distance_km`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "symbol-map",
+              "encodings": {
+                "coordinates": {
+                  "latitude": {
+                    "fieldName": "latitude"
+                  },
+                  "longitude": {
+                    "fieldName": "longitude"
+                  }
+                },
+                "color": {
+                  "fieldName": "miss_rate",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "miss_rate"
+                },
+                "extra": [
+                  {
+                    "fieldName": "county_name",
+                    "displayName": "county_name"
+                  },
+                  {
+                    "fieldName": "state_alpha",
+                    "displayName": "state_alpha"
+                  },
+                  {
+                    "fieldName": "index_name",
+                    "displayName": "index_name"
+                  },
+                  {
+                    "fieldName": "n_loss",
+                    "displayName": "n_loss"
+                  },
+                  {
+                    "fieldName": "false_alarm_rate",
+                    "displayName": "false_alarm_rate"
+                  },
+                  {
+                    "fieldName": "avg_distance_km",
+                    "displayName": "avg_distance_km"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Basis risk (miss rate) by county"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 4,
+            "width": 3,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "symbol-map_5",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "coverage",
+                  "fields": [
+                    {
+                      "name": "latitude",
+                      "expression": "`latitude`"
+                    },
+                    {
+                      "name": "longitude",
+                      "expression": "`longitude`"
+                    },
+                    {
+                      "name": "share_years_covered",
+                      "expression": "`share_years_covered`"
+                    },
+                    {
+                      "name": "county_name",
+                      "expression": "`county_name`"
+                    },
+                    {
+                      "name": "state_alpha",
+                      "expression": "`state_alpha`"
+                    },
+                    {
+                      "name": "years_covered_30km",
+                      "expression": "`years_covered_30km`"
+                    },
+                    {
+                      "name": "nearest_usable_km_median",
+                      "expression": "`nearest_usable_km_median`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "symbol-map",
+              "encodings": {
+                "coordinates": {
+                  "latitude": {
+                    "fieldName": "latitude"
+                  },
+                  "longitude": {
+                    "fieldName": "longitude"
+                  }
+                },
+                "color": {
+                  "fieldName": "share_years_covered",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "share_years_covered"
+                },
+                "extra": [
+                  {
+                    "fieldName": "county_name",
+                    "displayName": "county_name"
+                  },
+                  {
+                    "fieldName": "state_alpha",
+                    "displayName": "state_alpha"
+                  },
+                  {
+                    "fieldName": "years_covered_30km",
+                    "displayName": "years_covered_30km"
+                  },
+                  {
+                    "fieldName": "nearest_usable_km_median",
+                    "displayName": "nearest_usable_km_median"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Share of years with a usable station within 30 km",
+                "showDescription": true,
+                "description": "Corn Belt states. Light points = counties the station network leaves uncovered in most years"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 4,
+            "width": 3,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "table_6",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "basis_risk_map",
+                  "fields": [
+                    {
+                      "name": "county_name",
+                      "expression": "`county_name`"
+                    },
+                    {
+                      "name": "state_alpha",
+                      "expression": "`state_alpha`"
+                    },
+                    {
+                      "name": "crop",
+                      "expression": "`crop`"
+                    },
+                    {
+                      "name": "index_name",
+                      "expression": "`index_name`"
+                    },
+                    {
+                      "name": "miss_rate",
+                      "expression": "`miss_rate`"
+                    },
+                    {
+                      "name": "false_alarm_rate",
+                      "expression": "`false_alarm_rate`"
+                    },
+                    {
+                      "name": "avg_distance_km",
+                      "expression": "`avg_distance_km`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "county_name",
+                    "displayName": "county_name"
+                  },
+                  {
+                    "fieldName": "state_alpha",
+                    "displayName": "state_alpha"
+                  },
+                  {
+                    "fieldName": "crop",
+                    "displayName": "crop"
+                  },
+                  {
+                    "fieldName": "index_name",
+                    "displayName": "index_name"
+                  },
+                  {
+                    "fieldName": "miss_rate",
+                    "displayName": "miss_rate"
+                  },
+                  {
+                    "fieldName": "false_alarm_rate",
+                    "displayName": "false_alarm_rate"
+                  },
+                  {
+                    "fieldName": "avg_distance_km",
+                    "displayName": "avg_distance_km"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Counties, worst basis risk first"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 12,
+            "width": 6,
+            "height": 7
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    },
+    {
+      "name": "p_trigger",
+      "displayName": "2. Which trigger",
+      "layout": [
+        {
+          "widget": {
+            "name": "text_7",
+            "multilineTextboxSpec": {
+              "lines": [
+                "## Which trigger works, and why does distance matter?\n\n",
+                "A trigger that paid at random 20% of years would miss about 80% of losses. Lower bars are better; in the scatter, the bottom-left is better.\n\n"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 5,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "filter_8",
+            "queries": [
+              {
+                "name": "f_crop_trigger_perf",
+                "query": {
+                  "datasetName": "trigger_perf",
+                  "fields": [
+                    {
+                      "name": "crop",
+                      "expression": "`crop`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "f_crop_distance_bands",
+                "query": {
+                  "datasetName": "distance_bands",
+                  "fields": [
+                    {
+                      "name": "crop",
+                      "expression": "`crop`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "f_crop_portfolio_year",
+                "query": {
+                  "datasetName": "portfolio_year",
+                  "fields": [
+                    {
+                      "name": "crop",
+                      "expression": "`crop`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "crop",
+                    "displayName": "crop",
+                    "queryName": "f_crop_trigger_perf"
+                  },
+                  {
+                    "fieldName": "crop",
+                    "displayName": "crop",
+                    "queryName": "f_crop_distance_bands"
+                  },
+                  {
+                    "fieldName": "crop",
+                    "displayName": "crop",
+                    "queryName": "f_crop_portfolio_year"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Crop"
+              },
+              "selection": {
+                "defaultSelection": {
+                  "values": {
+                    "dataType": "STRING",
+                    "values": [
+                      {
+                        "value": "corn"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 5,
+            "y": 0,
+            "width": 1,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_9",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "trigger_perf",
+                  "fields": [
+                    {
+                      "name": "index_name",
+                      "expression": "`index_name`"
+                    },
+                    {
+                      "name": "avg(miss_rate)",
+                      "expression": "AVG(`miss_rate`)"
+                    },
+                    {
+                      "name": "pay_freq",
+                      "expression": "`pay_freq`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "index_name",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "displayName": "index_name"
+                },
+                "y": {
+                  "fieldName": "avg(miss_rate)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "miss_rate"
+                },
+                "color": {
+                  "fieldName": "pay_freq",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "displayName": "pay_freq"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Miss rate by index and pay frequency"
+              },
+              "mark": {
+                "layout": "group"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 3,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "scatter_10",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "trigger_perf",
+                  "fields": [
+                    {
+                      "name": "false_alarm_rate",
+                      "expression": "`false_alarm_rate`"
+                    },
+                    {
+                      "name": "miss_rate",
+                      "expression": "`miss_rate`"
+                    },
+                    {
+                      "name": "index_name",
+                      "expression": "`index_name`"
+                    },
+                    {
+                      "name": "loss_years",
+                      "expression": "`loss_years`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "scatter",
+              "encodings": {
+                "x": {
+                  "fieldName": "false_alarm_rate",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "false_alarm_rate"
+                },
+                "y": {
+                  "fieldName": "miss_rate",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "miss_rate"
+                },
+                "color": {
+                  "fieldName": "index_name",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "displayName": "index_name"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Miss rate vs false-alarm rate (each point = index x pay frequency)"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 2,
+            "width": 3,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_11",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "distance_bands",
+                  "fields": [
+                    {
+                      "name": "dist_band",
+                      "expression": "`dist_band`"
+                    },
+                    {
+                      "name": "avg(miss_rate)",
+                      "expression": "AVG(`miss_rate`)"
+                    },
+                    {
+                      "name": "index_name",
+                      "expression": "`index_name`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "dist_band",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "displayName": "dist_band"
+                },
+                "y": {
+                  "fieldName": "avg(miss_rate)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "miss_rate"
+                },
+                "color": {
+                  "fieldName": "index_name",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "displayName": "index_name"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Miss rate by station distance (all pay frequencies)"
+              },
+              "mark": {
+                "layout": "group"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 9,
+            "width": 3,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "line_12",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "corr_curve",
+                  "fields": [
+                    {
+                      "name": "dist_bin_km",
+                      "expression": "`dist_bin_km`"
+                    },
+                    {
+                      "name": "avg(median_corr_prcp)",
+                      "expression": "AVG(`median_corr_prcp`)"
+                    },
+                    {
+                      "name": "avg(median_corr_heat)",
+                      "expression": "AVG(`median_corr_heat`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "dist_bin_km",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "distance (km)"
+                },
+                "y": {
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "fields": [
+                    {
+                      "fieldName": "avg(median_corr_prcp)",
+                      "displayName": "rainfall correlation"
+                    },
+                    {
+                      "fieldName": "avg(median_corr_heat)",
+                      "displayName": "heat-day correlation"
+                    }
+                  ]
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Weather similarity between stations vs distance"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 9,
+            "width": 3,
+            "height": 7
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    },
+    {
+      "name": "p_cost",
+      "displayName": "3. What it costs",
+      "layout": [
+        {
+          "widget": {
+            "name": "text_13",
+            "multilineTextboxSpec": {
+              "lines": [
+                "## What does cover cost?\n\n",
+                "Burn-cost premium = average past payout x 1.25 loading. Sum insured = 85% of trend yield x an illustrative price (corn USD 4.50/bu, soybeans USD 11.00/bu).\n\n"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 5,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "filter_14",
+            "queries": [
+              {
+                "name": "f_crop_premium",
+                "query": {
+                  "datasetName": "premium",
+                  "fields": [
+                    {
+                      "name": "crop",
+                      "expression": "`crop`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "crop",
+                    "displayName": "crop",
+                    "queryName": "f_crop_premium"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Crop"
+              },
+              "selection": {
+                "defaultSelection": {
+                  "values": {
+                    "dataType": "STRING",
+                    "values": [
+                      {
+                        "value": "corn"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 5,
+            "y": 0,
+            "width": 1,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "symbol-map_15",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "premium",
+                  "fields": [
+                    {
+                      "name": "latitude",
+                      "expression": "`latitude`"
+                    },
+                    {
+                      "name": "longitude",
+                      "expression": "`longitude`"
+                    },
+                    {
+                      "name": "premium_per_acre_usd",
+                      "expression": "`premium_per_acre_usd`"
+                    },
+                    {
+                      "name": "county_name",
+                      "expression": "`county_name`"
+                    },
+                    {
+                      "name": "state_alpha",
+                      "expression": "`state_alpha`"
+                    },
+                    {
+                      "name": "index_name",
+                      "expression": "`index_name`"
+                    },
+                    {
+                      "name": "premium_rate",
+                      "expression": "`premium_rate`"
+                    },
+                    {
+                      "name": "payout_freq",
+                      "expression": "`payout_freq`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "symbol-map",
+              "encodings": {
+                "coordinates": {
+                  "latitude": {
+                    "fieldName": "latitude"
+                  },
+                  "longitude": {
+                    "fieldName": "longitude"
+                  }
+                },
+                "color": {
+                  "fieldName": "premium_per_acre_usd",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "premium_per_acre_usd"
+                },
+                "extra": [
+                  {
+                    "fieldName": "county_name",
+                    "displayName": "county_name"
+                  },
+                  {
+                    "fieldName": "state_alpha",
+                    "displayName": "state_alpha"
+                  },
+                  {
+                    "fieldName": "index_name",
+                    "displayName": "index_name"
+                  },
+                  {
+                    "fieldName": "premium_rate",
+                    "displayName": "premium_rate"
+                  },
+                  {
+                    "fieldName": "payout_freq",
+                    "displayName": "payout_freq"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Premium per acre (USD)"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 3,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_16",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "premium",
+                  "fields": [
+                    {
+                      "name": "rate_band_pct",
+                      "expression": "ROUND(`premium_rate` * 100, 0)"
+                    },
+                    {
+                      "name": "count(*)",
+                      "expression": "COUNT(`*`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "rate_band_pct",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "displayName": "premium rate (%, rounded)"
+                },
+                "y": {
+                  "fieldName": "count(*)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "counties"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Premium rate distribution (counties per 1-point band)"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 2,
+            "width": 3,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "table_17",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "premium",
+                  "fields": [
+                    {
+                      "name": "county_name",
+                      "expression": "`county_name`"
+                    },
+                    {
+                      "name": "state_alpha",
+                      "expression": "`state_alpha`"
+                    },
+                    {
+                      "name": "crop",
+                      "expression": "`crop`"
+                    },
+                    {
+                      "name": "index_name",
+                      "expression": "`index_name`"
+                    },
+                    {
+                      "name": "payout_freq",
+                      "expression": "`payout_freq`"
+                    },
+                    {
+                      "name": "premium_rate",
+                      "expression": "`premium_rate`"
+                    },
+                    {
+                      "name": "sum_insured_latest",
+                      "expression": "`sum_insured_latest`"
+                    },
+                    {
+                      "name": "premium_per_acre_usd",
+                      "expression": "`premium_per_acre_usd`"
+                    },
+                    {
+                      "name": "shortfall_share_paid",
+                      "expression": "`shortfall_share_paid`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "county_name",
+                    "displayName": "county_name"
+                  },
+                  {
+                    "fieldName": "state_alpha",
+                    "displayName": "state_alpha"
+                  },
+                  {
+                    "fieldName": "crop",
+                    "displayName": "crop"
+                  },
+                  {
+                    "fieldName": "index_name",
+                    "displayName": "index_name"
+                  },
+                  {
+                    "fieldName": "payout_freq",
+                    "displayName": "payout_freq"
+                  },
+                  {
+                    "fieldName": "premium_rate",
+                    "displayName": "premium_rate"
+                  },
+                  {
+                    "fieldName": "sum_insured_latest",
+                    "displayName": "sum_insured_latest"
+                  },
+                  {
+                    "fieldName": "premium_per_acre_usd",
+                    "displayName": "premium_per_acre_usd"
+                  },
+                  {
+                    "fieldName": "shortfall_share_paid",
+                    "displayName": "shortfall_share_paid"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Premium by county"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 10,
+            "width": 6,
+            "height": 7
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    },
+    {
+      "name": "p_year",
+      "displayName": "4. Worst year",
+      "layout": [
+        {
+          "widget": {
+            "name": "text_18",
+            "multilineTextboxSpec": {
+              "lines": [
+                "## How bad can a year get for the insurer?\n\n",
+                "Totals over all priced counties, one insured acre each. 2012, the Corn Belt drought, is the worst year.\n\n"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 5,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "filter_19",
+            "queries": [
+              {
+                "name": "f_crop_portfolio_summary",
+                "query": {
+                  "datasetName": "portfolio_summary",
+                  "fields": [
+                    {
+                      "name": "crop",
+                      "expression": "`crop`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "f_crop_portfolio_year",
+                "query": {
+                  "datasetName": "portfolio_year",
+                  "fields": [
+                    {
+                      "name": "crop",
+                      "expression": "`crop`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "crop",
+                    "displayName": "crop",
+                    "queryName": "f_crop_portfolio_summary"
+                  },
+                  {
+                    "fieldName": "crop",
+                    "displayName": "crop",
+                    "queryName": "f_crop_portfolio_year"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Crop"
+              },
+              "selection": {
+                "defaultSelection": {
+                  "values": {
+                    "dataType": "STRING",
+                    "values": [
+                      {
+                        "value": "corn"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 5,
+            "y": 0,
+            "width": 1,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "counter_20",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "portfolio_summary",
+                  "fields": [
+                    {
+                      "name": "max(expected_annual_payout_usd)",
+                      "expression": "MAX(`expected_annual_payout_usd`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "max(expected_annual_payout_usd)",
+                  "displayName": "Expected annual payout (USD)"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Expected annual payout (USD)"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "counter_21",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "portfolio_summary",
+                  "fields": [
+                    {
+                      "name": "max(worst_payout_usd)",
+                      "expression": "MAX(`worst_payout_usd`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "max(worst_payout_usd)",
+                  "displayName": "Worst-year payout (USD)"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Worst-year payout (USD)"
+              }
+            }
+          },
+          "position": {
+            "x": 2,
+            "y": 2,
+            "width": 1,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "counter_22",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "portfolio_summary",
+                  "fields": [
+                    {
+                      "name": "max(worst_year)",
+                      "expression": "MAX(`worst_year`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "max(worst_year)",
+                  "displayName": "Worst year"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Worst year"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 2,
+            "width": 1,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "counter_23",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "portfolio_summary",
+                  "fields": [
+                    {
+                      "name": "max(worst_loss_ratio)",
+                      "expression": "MAX(`worst_loss_ratio`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "max(worst_loss_ratio)",
+                  "displayName": "Worst-year loss ratio"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Worst-year loss ratio"
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 2,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "line_24",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "portfolio_year",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "sum(payout_usd)",
+                      "expression": "SUM(`payout_usd`)"
+                    },
+                    {
+                      "name": "sum(premium_usd)",
+                      "expression": "SUM(`premium_usd`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "year",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "year"
+                },
+                "y": {
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "fields": [
+                    {
+                      "fieldName": "sum(payout_usd)",
+                      "displayName": "payout (USD)"
+                    },
+                    {
+                      "fieldName": "sum(premium_usd)",
+                      "displayName": "premium (USD)"
+                    }
+                  ]
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Payout vs premium by year"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 5,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_25",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "portfolio_year",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "sum(counties_paid)",
+                      "expression": "SUM(`counties_paid`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "displayName": "year"
+                },
+                "y": {
+                  "fieldName": "sum(counties_paid)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "counties_paid"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Counties paid per year"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 12,
+            "width": 6,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    }
+  ]
+}

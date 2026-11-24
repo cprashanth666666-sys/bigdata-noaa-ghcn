@@ -35,7 +35,7 @@ STORIES = {
     "5.4": (5, "Ishwarya", date(2026, 11, 16), date(2026, 11, 16)),
     "6.1": (3, "Ashish", date(2026, 11, 16), date(2026, 11, 16)),
     "6.2": (3, "Ashish", date(2026, 11, 16), date(2026, 11, 16)),
-    "7.1": (5, "Ashish", None, None),
+    "7.1": (5, "Ashish", date(2026, 11, 24), date(2026, 11, 24)),
     "7.2": (5, "Ashish", None, None),
     "7.3": (3, "C. Prashanth", None, None),
 }
@@ -45,7 +45,7 @@ assert TOTAL == 78, TOTAL
 START, TODAY, END = date(2026, 11, 3), date(2026, 11, 24), date(2026, 11, 27)
 # Plan for the 13 open points (work-distribution table of the CP4 report): 7.1 dashboard 24 Nov (CP4),
 # 7.3 benchmark 26 Nov, 7.2 report 27 Nov (3 pts), 7.2 viva deck 29 Nov (2 pts).
-PLAN_LEFT = {date(2026, 11, 24): 5, date(2026, 11, 26): 3, date(2026, 11, 27): 3, date(2026, 11, 29): 2}
+PLAN_LEFT = {date(2026, 11, 26): 3, date(2026, 11, 27): 3, date(2026, 11, 29): 2}
 PLAN_END = date(2026, 11, 29)
 
 
@@ -72,7 +72,7 @@ def burndown(out):
     ax.step(pd, pv, where="post", color=GOLD, lw=2, ls=":", label="Plan for open stories (to 29 Nov)")
     ax.axvline(TODAY, color="#666666", lw=0.8)
     ax.text(TODAY, 45, " Today\n (CP4,\n 24 Nov)", fontsize=8, color=INK, va="top")
-    ax.annotate(f"{vd[-1]} left", (TODAY, vd[-1]), xytext=(-48, 8), textcoords="offset points", fontsize=8, color=INK)
+    ax.annotate(f"{vd[-1]} left", (TODAY, vd[-1]), xytext=(6, -14), textcoords="offset points", fontsize=8, color=INK)
     ax.annotate("16 Nov: notebooks 06-15 run as\nDatabricks jobs; 46/46 checks pass",
                 (date(2026, 11, 16), 13), xytext=(-150, -2), textcoords="offset points", fontsize=8, color=INK,
                 arrowprops=dict(arrowstyle="-", color="#888888", lw=0.8))

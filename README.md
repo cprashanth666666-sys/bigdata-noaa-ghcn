@@ -71,7 +71,7 @@ Plan, data sources and design changes for India: [docs/INDIA_EXPANSION_PLAN.md](
 - Checkpoint 3 write-up (Agile approach): [docs/Checkpoint3_Agile_Writeup.docx](docs/Checkpoint3_Agile_Writeup.docx)
 - Checkpoint 4 (24 Nov 2026): [docs/T04_CP4_Pipeline_Dashboard_Report.docx](docs/T04_CP4_Pipeline_Dashboard_Report.docx): build audit, Gold-table results, evaluation metrics, team progress, burndown, work plan and governance note. Results and their second-method checks: [docs/report/results_24nov.md](docs/report/results_24nov.md)
 - Final report draft (due 27 Nov): [docs/T04_Final_Report.docx](docs/T04_Final_Report.docx); only the members' after-project skill ratings remain to be filled
-- Dashboard (story 7.1): SQL views built and validated (notebook 14); layout in [docs/DASHBOARD.md](docs/DASHBOARD.md); assembly in the Databricks UI is in progress
+- Dashboard (story 7.1): published on 24 Nov 2026, [open in Databricks](https://dbc-d4bd1829-d2ae.cloud.databricks.com/dashboardsv3/01f1e7efb8d312aa9a04c3e417b618b0/published) (workspace sign-in needed). Built from code by [databricks/dashboard/build_dashboard.py](databricks/dashboard/build_dashboard.py) (`--deploy` creates or updates and publishes it); definition in [parametric_insurance.lvdash.json](databricks/dashboard/parametric_insurance.lvdash.json); layout in [docs/DASHBOARD.md](docs/DASHBOARD.md)
 - Notebook exports for submission (.ipynb, exported from the Databricks workspace): [notebooks_ipynb/](notebooks_ipynb/)
 - Team, owners and progress: [docs/TEAM_PROGRESS.md](docs/TEAM_PROGRESS.md)
 
