@@ -93,8 +93,21 @@ Total: 37 points, about two one-week sprints. Start after the final report (27 N
 
 Keep one pipeline and move everything country-specific into a config table: `country, unit (county/district), weather source (station/grid), season window by state and crop, loss rule, currency, price table, premium cap`. Notebooks 10, 11 and 13 already read their thresholds from constants at the top; moving those constants into the table lets the same trigger-scoring and pricing code run for the US and India, and later for any country with a gridded weather product and sub-national yields.
 
-## 7. Started on 24 Nov 2026
+## 7. Progress (24 Nov 2026)
 
-- `databricks/16_india_ingest_imd_grids.py`: IMD rain and temperature to Bronze (test run for 2023 submitted).
-- `scripts/fetch_des_yields.py`: DES Kharif yields for six crops, all states, 1997–2022.
-- `databricks/17_india_district_yields.py` and `18_india_district_cells.py`: next.
+| Story | Status | Notebook | Result |
+|---|---|---|---|
+| IN-1.1 | Done | 16 | 36 years of IMD rain (65.3 million cell-days) and temperature; numpy and Spark June-September means agree |
+| IN-1.2 | Done | 17 + `scripts/fetch_des_yields.py` | 52,149 DES rows, six crops, 1997-2022 |
+| IN-1.3 | Done (alias table pending) | 18 | 735 districts; 91.6% of yield rows matched to a boundary |
+| IN-2.1 | Done | 19 | 26,460 district-years; driest years 2002 and 2009 match IMD's droughts |
+| IN-2.2 | Done | 20 | Losses 17-29% of district-years (85% rule); PMFBY 70/80/90% flags |
+| IN-3.1 | Done | 21 | Best trigger per state: 57% miss rate vs 73% naive; season rain best in rain-fed states (62% vs 69% elsewhere) |
+| IN-3.2 | Done | 21 | Miss rate falls from 72% (< 2,000 km2) to 63% (>= 10,000 km2) |
+| IN-4.1 | Done in % of sum insured (INR pending D8) | 22 | Trigger premium 8-9% of SI vs 2% farmer cap; pays 25-42% of a PMFBY-style shortfall |
+| IN-4.2 | To do | | Dashboard page |
+| IN-5.1 | To do | | Extend notebook 15 |
+
+32 of 37 points are done. Results and checks: [docs/report/india_results_24nov.md](report/india_results_24nov.md).
+
+Next: A3 (per-state season windows), A7 (district alias table), D8 (MSP to convert rates to INR), out-of-sample thresholds, then IN-4.2 and IN-5.1.

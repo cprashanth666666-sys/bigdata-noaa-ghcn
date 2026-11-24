@@ -125,7 +125,7 @@ const s1 = [
     ["Dashboard", "Partly done", "Eight v_* views built and validated (notebook 14); four-page layout in docs/DASHBOARD.md. Dashboard not yet assembled and published in the Databricks UI; no .lvdash.json export in the repo", "Ashishshri10"],
     ["README", "Done", "README.md lists both datasets, all notebooks with their outputs and run order, the India pilot, and links to this report, the results file and the dashboard guide", "cprashanth666666-sys"],
     ["One-page governance note", "Drafted", "Section 6 of this file (licence, privacy, bias, data quality)", "Reva-Pradeep"],
-    ["Notebooks as .ipynb", "Not done", "Only the combined Checkpoint 3 notebook is .ipynb; notebooks 03 to 15 are .py source files", "cprashanth666666-sys"],
+    ["Notebooks as .ipynb", "Done", "All 23 notebooks (00–15 US pipeline, 16–22 India pilot) exported from the Databricks workspace to notebooks_ipynb/; each export checked line by line against the repository source", "cprashanth666666-sys"],
   ], [2000, 1350, 4050, 1500]),
   source("Sources: Big Data Project Work Student Guide (20 Oct 2026), checkpoint table; repository main branch at commit 8a294d3; docs/PROJECT_PLAN.md section 6."),
 ];
@@ -242,7 +242,7 @@ const s5 = [
   tableCaption("Remaining work, owners and due dates"),
   table("T7", ["Task", "Story", "Owner", "Support", "Pts", "Due", "Done when"], [
     ["Assemble the four-page dashboard, publish it, export .lvdash.json to databricks/dashboard/", "7.1", gh("Ashishshri10"), "IshwaryaLaksh", "5", "24 Nov, 6 pm", "Published link in README; export committed"],
-    ["Export notebooks 00–15 as .ipynb; upload files named T04_CP4_*", "CP4", gh("cprashanth666666-sys"), "Ashishshri10", "–", "24 Nov, 6 pm", "Files in the team folder"],
+    ["Export notebooks 00–15 as .ipynb; upload files named T04_CP4_*", "CP4", gh("cprashanth666666-sys"), "Ashishshri10", "–", "24 Nov, 6 pm", "Exported 24 Nov (notebooks_ipynb/); upload pending"],
     ["One-page governance note as its own file", "CP4", gh("Reva-Pradeep"), "shwetha123920", "–", "24 Nov, 6 pm", "T04_CP4_Governance.pdf uploaded"],
     ["Commit own work from own GitHub account (all now have write access)", "Team", "Each member", "–", "–", "From 24 Nov", "Commits show each author"],
     ["Review the Gold figures in Table 4 against the dashboard before the final report", "7.2", gh("shwetha123920"), "cprashanth666666-sys", "–", "25 Nov", "Figures match the dashboard"],
@@ -286,15 +286,19 @@ const s6 = [
 const s7 = [
   h1("7. Next Step: Extending the Model to India"),
   p("The same question applies in India, where the government already sells weather-index cover under the Restructured Weather Based Crop Insurance Scheme (RWBCIS) and caps the farmer’s Kharif premium at 2% of the sum insured (PIB, 29 August 2026). A pilot started on 24 November, outside the Checkpoint 4 scope. Its first test changed the design: the GHCN weather data already loaded holds 3,807 Indian station IDs, but only about 143 report in a year, too few for about 780 districts. The pilot therefore uses the India Meteorological Department’s gridded weather instead of stations."),
-  tableCaption("India pilot: data loaded and checked on Databricks (24 Nov 2026)"),
+  tableCaption("India pilot: data and results built and checked on Databricks (24 Nov 2026)"),
   table("T9", ["Layer", "Source", "Delta table (notebook)", "Status and check"], [
     ["Weather", "IMD gridded daily rainfall 0.25°, temperature 1.0°", "imd_rain_daily, imd_temp_daily (16)", "36 years (1990–2025): 65.3 million rain rows over 4,964 land cells, 4.6 million temperature rows. 2023 June–September mean 811 mm against IMD’s official 820 mm"],
     ["Yield", "DES district Kharif area, production and yield, six crops, 1997–2022", "in_district_yields (17)", "52,149 rows fetched, none lost in loading; production ÷ area reproduces the published yield"],
     ["Districts", "geoBoundaries ADM2 (ODbL), 735 districts", "in_districts, in_district_cells (18)", "Every district has at least one weather cell (median 5); district areas sum to 3.29 million km², India’s official area is 3.287"],
     ["Name match", "DES names to boundary names", "in_district_xwalk (18)", "633 of 729 yield districts matched (91.6% of yield rows); the rest are mostly districts created after the boundary release"],
+    ["Features", "June–September rain, phase rain, dry spell (≤ 2.5 mm), onset, excess, heat", "in_district_year_weather (19)", "26,460 district-years; the driest years, 2002 and 2009, are IMD’s two monsoon droughts"],
+    ["Losses", "85% of trend, and PMFBY best 5 of 7 years × 70/80/90%", "in_district_yield_trend (20)", "17–29% of district-years are losses (US: 9–10%); rice lowest"],
+    ["Basis risk", "Same scoring as notebook 11", "in_best_trigger_state (21)", "Best trigger per state misses 57% of losses vs 73% at random; season rain misses 62% in six rain-fed states vs 69% elsewhere; 72% in districts < 2,000 km², 63% in those ≥ 10,000 km²"],
+    ["Pricing", "Burn cost, % of sum insured", "in_premium_district (22)", "Trigger premium 8–9% vs the 2% farmer cap; pays 25–42% of a PMFBY-style shortfall"],
   ], [1100, 2600, 2100, 3100]),
   source("Sources: IMD Pune gridded data archive; DES, Ministry of Agriculture & Farmers Welfare, APY reports; geoBoundaries gbOpen IND; IMD 2023 Southwest Monsoon End of Season Report. Plan, data list and design changes: docs/INDIA_EXPANSION_PLAN.md."),
-  p("Next, the pilot scores RWBCIS-style triggers (rainfall deficit by crop stage, consecutive dry days, excess rainfall and heat) against district losses, measured both against trend and by the PMFBY threshold yield, and prices them in rupees against the 2% premium cap."),
+  p("Because the best trigger per state still misses more than half of losses and costs four to seven times the farmer’s 2% cap, we read the India result as support for a weather trigger as a fast top-up to PMFBY in rain-fed states, not a replacement, with the limit that thresholds are in-sample and one June–September window is used for every state. Next: per-state season windows, a district alias table, rupee pricing from MSP, and an India dashboard page. Full results: docs/report/india_results_24nov.md."),
 ];
 
 const refs = [

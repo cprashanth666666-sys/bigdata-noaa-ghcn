@@ -61,6 +61,10 @@ Plan, data sources and design changes for India: [docs/INDIA_EXPANSION_PLAN.md](
 | `scripts/fetch_des_yields.py` | Run locally: district Kharif area, production and yield for six crops, 1997-2022, from the DES APY portal |
 | `databricks/17_india_district_yields.py` | Loads the DES file into `in_des_apy_raw` and the cleaned `in_district_yields` |
 | `databricks/18_india_district_cells.py` | geoBoundaries districts, IMD cell-to-district mapping, and the DES-to-boundary name crosswalk (`in_districts`, `in_district_cells`, `in_district_xwalk`) |
+| `databricks/19_india_kharif_features.py` | IN-2.1: `in_district_year_weather` (June-September rain, phase rain, deficit, longest dry spell at <= 2.5 mm, onset delay, 3-day maximum, heat days) |
+| `databricks/20_india_yield_losses.py` | IN-2.2: `in_district_yield_trend` (85%-of-trend loss flag and the PMFBY best-5-of-7 threshold at 70/80/90%) |
+| `databricks/21_india_trigger_basis_risk.py` | IN-3.1, IN-3.2: `in_trigger_eval_district`, `in_best_trigger_state`, `in_trigger_eval_size` (basis risk per district, best trigger per state, basis risk by district size) |
+| `databricks/22_india_pricing.py` | IN-4.1: `in_premium_district`, `in_premium_state` (trigger premium as % of sum insured vs the PMFBY farmer cap and a PMFBY-style indemnity cost) |
 
 ## Checkpoint status and reports
 
@@ -68,6 +72,7 @@ Plan, data sources and design changes for India: [docs/INDIA_EXPANSION_PLAN.md](
 - Checkpoint 4 (24 Nov 2026): [docs/T04_CP4_Pipeline_Dashboard_Report.docx](docs/T04_CP4_Pipeline_Dashboard_Report.docx): build audit, Gold-table results, evaluation metrics, team progress, burndown, work plan and governance note. Results and their second-method checks: [docs/report/results_24nov.md](docs/report/results_24nov.md)
 - Final report draft (due 27 Nov): [docs/T04_Final_Report.docx](docs/T04_Final_Report.docx); only the members' after-project skill ratings remain to be filled
 - Dashboard (story 7.1): SQL views built and validated (notebook 14); layout in [docs/DASHBOARD.md](docs/DASHBOARD.md); assembly in the Databricks UI is in progress
+- Notebook exports for submission (.ipynb, exported from the Databricks workspace): [notebooks_ipynb/](notebooks_ipynb/)
 - Team, owners and progress: [docs/TEAM_PROGRESS.md](docs/TEAM_PROGRESS.md)
 
 The notebooks use Databricks source format. To run one from this machine with the Databricks CLI:
