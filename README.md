@@ -51,7 +51,24 @@ Team, task ownership and progress: [docs/TEAM_PROGRESS.md](docs/TEAM_PROGRESS.md
 | `databricks/14_dashboard_views.py` | Story 7.1: creates the `v_*` views the Databricks SQL dashboard reads; layout in [docs/DASHBOARD.md](docs/DASHBOARD.md) |
 | `databricks/15_validate_pipeline.py` | Runs last: checks every module's table (row counts and content rules) and writes `pipeline_validation`; 46 of 46 checks passed on 16 Nov 2026 |
 
-Checkpoint 3 write-up (Agile approach): [docs/Checkpoint3_Agile_Writeup.docx](docs/Checkpoint3_Agile_Writeup.docx)
+### India pilot (started 24 Nov 2026, beyond the Checkpoint 4 scope)
+
+Plan, data sources and design changes for India: [docs/INDIA_EXPANSION_PLAN.md](docs/INDIA_EXPANSION_PLAN.md)
+
+| Notebook / script | Purpose |
+|---|---|
+| `databricks/16_india_ingest_imd_grids.py` | IMD gridded daily rainfall (0.25 deg) and max/min temperature (1.0 deg), 1990-2025, into `imd_rain_daily` and `imd_temp_daily` |
+| `scripts/fetch_des_yields.py` | Run locally: district Kharif area, production and yield for six crops, 1997-2022, from the DES APY portal |
+| `databricks/17_india_district_yields.py` | Loads the DES file into `in_des_apy_raw` and the cleaned `in_district_yields` |
+| `databricks/18_india_district_cells.py` | geoBoundaries districts, IMD cell-to-district mapping, and the DES-to-boundary name crosswalk (`in_districts`, `in_district_cells`, `in_district_xwalk`) |
+
+## Checkpoint status and reports
+
+- Checkpoint 3 write-up (Agile approach): [docs/Checkpoint3_Agile_Writeup.docx](docs/Checkpoint3_Agile_Writeup.docx)
+- Checkpoint 4 (24 Nov 2026): [docs/T04_CP4_Pipeline_Dashboard_Report.docx](docs/T04_CP4_Pipeline_Dashboard_Report.docx): build audit, Gold-table results, evaluation metrics, team progress, burndown, work plan and governance note. Results and their second-method checks: [docs/report/results_24nov.md](docs/report/results_24nov.md)
+- Final report draft (due 27 Nov): [docs/T04_Final_Report.docx](docs/T04_Final_Report.docx); only the members' after-project skill ratings remain to be filled
+- Dashboard (story 7.1): SQL views built and validated (notebook 14); layout in [docs/DASHBOARD.md](docs/DASHBOARD.md); assembly in the Databricks UI is in progress
+- Team, owners and progress: [docs/TEAM_PROGRESS.md](docs/TEAM_PROGRESS.md)
 
 The notebooks use Databricks source format. To run one from this machine with the Databricks CLI:
 

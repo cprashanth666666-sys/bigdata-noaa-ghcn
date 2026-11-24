@@ -17,15 +17,34 @@ Board columns: Backlog -> Sprint -> In progress -> Review -> Done. Fields: Sprin
 
 Total: 21 stories, 78 points.
 
-## Status (as of 17 Nov 2026)
+## Status (as of 24 Nov 2026, Checkpoint 4)
 
-Source: PROJECT_PLAN.md section 6; verified on Databricks 16 Nov 2026 (validation notebook 15: 46/46 checks).
+Done = Definition of Done met (notebook run-verified on Databricks; validation notebook 15: 46/46 checks, 16 Nov).
+Burndown and per-member chart: [T04_CP4_Pipeline_Dashboard_Progress.docx](T04_CP4_Pipeline_Dashboard_Progress.docx) (built by `report/make_cp4_charts.py` and `report/build_cp4_report.js`).
 
-| Sprint | Stories | State |
-|---|---|---|
-| 0-4 | 1.1-1.4, 2.1-2.3, 3.1-3.3, 4.1-4.2, 5.1-5.3 | Done |
-| 5 | 5.4, 6.1, 6.2 done; 7.1 dashboard in progress | In progress |
-| 6 | 7.2 report and deck, 7.3 benchmark | Backlog |
+| Owner | Points done | Points open | Complete |
+|---|---|---|---|
+| shwetha123920 | 17 | 0 | 100% |
+| Reva-Pradeep | 13 | 0 | 100% |
+| IshwaryaLaksh | 18 | 0 | 100% |
+| Ashishshri10 | 6 | 10 | 38% |
+| cprashanth666666-sys | 11 | 3 | 79% |
+| **Team** | **65** | **13** | **83%** |
+
+Repository access: all four teammates (Ashishshri10, IshwaryaLaksh, Reva-Pradeep, shwetha123920) have write access; no invitation pending (checked 24 Nov).
+
+## Remaining work (proposed redistribution, confirm at stand-up)
+
+| Task | Story | Owner | Pts | Due |
+|---|---|---|---|---|
+| Assemble, publish and export the four-page dashboard | 7.1 | Ashishshri10 | 5 | 24 Nov, 6 pm |
+| Export notebooks as .ipynb, update README, upload T04_CP4_* files | CP4 | cprashanth666666-sys | - | 24 Nov, 6 pm |
+| One-page governance note as its own file | CP4 | Reva-Pradeep | - | 24 Nov, 6 pm |
+| Rerun notebook 15, pull Gold figures into the reports | 7.2 | shwetha123920 | - | 25 Nov |
+| Partitioning / broadcast-join benchmark (notebook 11 or 12) | 7.3 | IshwaryaLaksh | 3 | 26 Nov |
+| Final report: findings, recommendation, limits, after ratings | 7.2 | shwetha123920 | 3 | 27 Nov, 6 pm |
+| Viva deck and demo script | 7.2 | Reva-Pradeep | 2 | 29 Nov |
+| After-project skill ratings, learning-log entries, peer ratings | Team | Everyone | - | 25 Nov |
 
 ## How we track
 
